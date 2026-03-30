@@ -86,7 +86,7 @@ impl TradingService {
 
         Ok(node_config)
     }
-
+    /// todo 通过插件方式加载策略
     fn load_strategies(_launcher: &mut TradingKernel) -> Result<()> {
         // /// "BTC", "ETH", 主流币比较稳定做四小时以上周期 "ADA", "XRP", "BNB", "AVAX", "DOGE", "ETC", "AAVE",
         // // 示例：我们要批量构建以下资产的策略
