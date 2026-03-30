@@ -1,7 +1,7 @@
 use crate::nautilus::config::exchange::okx::{OkxExchangeConfig, OkxProviderFilters};
 use crate::nautilus::trading_kernel::TradingKernel;
 use ahash::AHashMap;
-use anyhow::{Result, anyhow};
+use anyhow::Result;
 use log::LevelFilter;
 use nautilus_common::cache::CacheConfig;
 use nautilus_common::enums::{Environment, SerializationEncoding};
@@ -23,52 +23,36 @@ impl TradingService {
     // -----------------------------
     // 异步执行 Sandbox / Live
     // -----------------------------
-    pub async fn run(environment: Environment) -> Result<()> {
-        match environment {
-            Environment::Sandbox | Environment::Live => {
-                // 构建 async 内核
-                let mut launcher = TradingService::build_kernel(environment).await?;
-                // 加入执行算法(策略信号下订单通过执行算法规避底层框架RefCell借用机制冲突)
-                // TradingService::add_exec_algorithm(&mut launcher)?;
-                // 加入策略
-                TradingService::load_strategies(&mut launcher)?;
-                launcher.run().await?;
-                Ok(())
-            }
-            Environment::Backtest => Err(anyhow!(
-                "run_async not supported for Backtest; use run_sync instead"
-            )),
-        }
+    pub async fn run(is_demo: bool) -> Result<()> {
+        // 构建 async 内核
+        let mut launcher = TradingService::build_kernel(is_demo).await?;
+        // 加入策略
+        TradingService::load_strategies(&mut launcher)?;
+        launcher.run().await?;
+
+        Ok(())
     }
 
-    async fn build_kernel(environment: Environment) -> Result<TradingKernel> {
-        let okx_config = Self::build_exchange_config(environment);
-
-        let launcher = match environment {
-            Environment::Live | Environment::Sandbox => {
-                let node_config = Self::build_node_config(environment)?;
-                TradingKernel::live(node_config, Box::new(okx_config)).await?
-            }
-            Environment::Backtest => {
-                return Err(anyhow!("Backtest must be run in blocking mode"));
-            }
-        };
+    async fn build_kernel(is_demo: bool) -> Result<TradingKernel> {
+        let okx_config = Self::build_exchange_config(is_demo);
+        let node_config = Self::build_node_config()?;
+        let launcher = TradingKernel::live(node_config, Box::new(okx_config)).await?;
 
         Ok(launcher)
     }
 
-    pub fn build_node_config(environment: Environment) -> Result<LiveNodeConfig> {
+    pub fn build_node_config() -> Result<LiveNodeConfig> {
         let instance_id = UUID4::new();
         let trader_id = TraderId::from("OKX-TRADER-001");
 
         let logging_config = Self::build_logging_config()?;
         let cache_config = Self::build_cache_config();
         let msgbus_config = Self::build_msgbus_config();
-        let exec_engine_config = Self::build_exec_engine_config(environment);
+        let exec_engine_config = Self::build_exec_engine_config();
 
         let node_config = LiveNodeConfig {
             trader_id,
-            environment,
+            environment: Environment::Live,
             instance_id: Some(instance_id),
 
             load_state: false,
@@ -131,10 +115,6 @@ impl TradingService {
     // }
 
     fn build_logging_config() -> Result<LoggerConfig> {
-        // 显式禁用 Portfolio=Error; fileout=Debug;
-        // let config = LoggerConfig::from_spec(
-        // 	"Strategy=Info;Portfolio=Off;RiskEngine=Error;ExecutionEngine=Info;is_colored=false",
-        // )?;
         let config = LoggerConfig {
             stdout_level: LevelFilter::Info,
             fileout_level: LevelFilter::Off,  // 禁用文件输出
@@ -156,7 +136,7 @@ impl TradingService {
         Ok(config)
     }
 
-    fn build_exchange_config(_environment: Environment) -> OkxExchangeConfig {
+    fn build_exchange_config(is_demo: bool) -> OkxExchangeConfig {
         // let mut is_demo = false;
         // let mut api_key = Some("87b2322a-b0dd-4a4b-84de-e3b23cf53fe4".to_string());
         // let mut api_secret = Some("DE6D29E2CA70E8C854D45D1E883BEBE9".to_string());
@@ -169,7 +149,6 @@ impl TradingService {
         // 	passphrase = Some("@8NautilusTrader".to_string());
         // }
 
-        let is_demo = true;
         let api_key = Some("464e0adf-7f02-47ac-82d3-95736b15a114".to_string());
         let api_secret = Some("0D76268C7336050D755209E19AE7B5AA".to_string());
         let passphrase = Some("@8NautilusTrader".to_string());
@@ -288,14 +267,9 @@ impl TradingService {
         }
     }
 
-    fn build_exec_engine_config(environment: Environment) -> LiveExecEngineConfig {
-        let reconciliation = match environment {
-            Environment::Backtest => false, // Backtest 通常不需要对账
-            Environment::Sandbox => false,  // Sandbox 通常不需要对账
-            Environment::Live => true,
-        };
+    fn build_exec_engine_config() -> LiveExecEngineConfig {
         LiveExecEngineConfig {
-            reconciliation,
+            reconciliation: true,
             //  内存清理 - 10资产场景优化
             purge_closed_orders_interval_mins: Some(15), // 8分钟清理一次
             purge_closed_orders_buffer_mins: Some(60),   // 保留45分钟
