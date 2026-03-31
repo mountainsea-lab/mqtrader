@@ -20,7 +20,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a15f179cd60c4584b8a8c596927aadc462e27f2ca70c04e0071964a73ba7a75"
 dependencies = [
  "cfg-if",
- "const-random",
  "getrandom 0.3.4",
  "once_cell",
  "serde",
@@ -95,224 +94,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7c02d123df017efcdfbd739ef81735b36c5ba83ec3c59c80a9d7ecc718f92e50"
 
 [[package]]
-name = "arrow"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e4754a624e5ae42081f464514be454b39711daae0458906dacde5f4c632f33a8"
-dependencies = [
- "arrow-arith",
- "arrow-array",
- "arrow-buffer",
- "arrow-cast",
- "arrow-csv",
- "arrow-data",
- "arrow-ipc",
- "arrow-json",
- "arrow-ord",
- "arrow-row",
- "arrow-schema",
- "arrow-select",
- "arrow-string",
-]
-
-[[package]]
-name = "arrow-arith"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f7b3141e0ec5145a22d8694ea8b6d6f69305971c4fa1c1a13ef0195aef2d678b"
-dependencies = [
- "arrow-array",
- "arrow-buffer",
- "arrow-data",
- "arrow-schema",
- "chrono",
- "num-traits",
-]
-
-[[package]]
-name = "arrow-array"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4c8955af33b25f3b175ee10af580577280b4bd01f7e823d94c7cdef7cf8c9aef"
-dependencies = [
- "ahash 0.8.12",
- "arrow-buffer",
- "arrow-data",
- "arrow-schema",
- "chrono",
- "half",
- "hashbrown 0.16.1",
- "num-complex",
- "num-integer",
- "num-traits",
-]
-
-[[package]]
-name = "arrow-buffer"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c697ddca96183182f35b3a18e50b9110b11e916d7b7799cbfd4d34662f2c56c2"
-dependencies = [
- "bytes",
- "half",
- "num-bigint",
- "num-traits",
-]
-
-[[package]]
-name = "arrow-cast"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "646bbb821e86fd57189c10b4fcdaa941deaf4181924917b0daa92735baa6ada5"
-dependencies = [
- "arrow-array",
- "arrow-buffer",
- "arrow-data",
- "arrow-ord",
- "arrow-schema",
- "arrow-select",
- "atoi",
- "base64",
- "chrono",
- "half",
- "lexical-core",
- "num-traits",
- "ryu",
-]
-
-[[package]]
-name = "arrow-csv"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8da746f4180004e3ce7b83c977daf6394d768332349d3d913998b10a120b790a"
-dependencies = [
- "arrow-array",
- "arrow-cast",
- "arrow-schema",
- "chrono",
- "csv",
- "csv-core",
- "regex",
-]
-
-[[package]]
-name = "arrow-data"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1fdd994a9d28e6365aa78e15da3f3950c0fdcea6b963a12fa1c391afb637b304"
-dependencies = [
- "arrow-buffer",
- "arrow-schema",
- "half",
- "num-integer",
- "num-traits",
-]
-
-[[package]]
-name = "arrow-ipc"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "abf7df950701ab528bf7c0cf7eeadc0445d03ef5d6ffc151eaae6b38a58feff1"
-dependencies = [
- "arrow-array",
- "arrow-buffer",
- "arrow-data",
- "arrow-schema",
- "arrow-select",
- "flatbuffers",
-]
-
-[[package]]
-name = "arrow-json"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0ff8357658bedc49792b13e2e862b80df908171275f8e6e075c460da5ee4bf86"
-dependencies = [
- "arrow-array",
- "arrow-buffer",
- "arrow-cast",
- "arrow-data",
- "arrow-schema",
- "chrono",
- "half",
- "indexmap",
- "itoa",
- "lexical-core",
- "memchr",
- "num-traits",
- "ryu",
- "serde_core",
- "serde_json",
- "simdutf8",
-]
-
-[[package]]
-name = "arrow-ord"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f7d8f1870e03d4cbed632959498bcc84083b5a24bded52905ae1695bd29da45b"
-dependencies = [
- "arrow-array",
- "arrow-buffer",
- "arrow-data",
- "arrow-schema",
- "arrow-select",
-]
-
-[[package]]
-name = "arrow-row"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "18228633bad92bff92a95746bbeb16e5fc318e8382b75619dec26db79e4de4c0"
-dependencies = [
- "arrow-array",
- "arrow-buffer",
- "arrow-data",
- "arrow-schema",
- "half",
-]
-
-[[package]]
-name = "arrow-schema"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8c872d36b7bf2a6a6a2b40de9156265f0242910791db366a2c17476ba8330d68"
-dependencies = [
- "bitflags",
-]
-
-[[package]]
-name = "arrow-select"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "68bf3e3efbd1278f770d67e5dc410257300b161b93baedb3aae836144edcaf4b"
-dependencies = [
- "ahash 0.8.12",
- "arrow-array",
- "arrow-buffer",
- "arrow-data",
- "arrow-schema",
- "num-traits",
-]
-
-[[package]]
-name = "arrow-string"
-version = "57.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "85e968097061b3c0e9fe3079cf2e703e487890700546b5b0647f60fca1b5a8d8"
-dependencies = [
- "arrow-array",
- "arrow-buffer",
- "arrow-data",
- "arrow-schema",
- "arrow-select",
- "memchr",
- "num-traits",
- "regex",
- "regex-syntax",
-]
-
-[[package]]
 name = "async-stream"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -343,15 +124,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.117",
-]
-
-[[package]]
-name = "atoi"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f28d99ec8bfea296261ca1af174f24225171fea9664ba9003cbebee704810528"
-dependencies = [
- "num-traits",
 ]
 
 [[package]]
@@ -672,26 +444,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2459377285ad874054d797f3ccebf984978aa39129f6eafde5cdc8315b612f8"
 
 [[package]]
-name = "const-random"
-version = "0.1.18"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "87e00182fe74b066627d63b85fd550ac2998d4b0bd86bfed477a0ae4c7c71359"
-dependencies = [
- "const-random-macro",
-]
-
-[[package]]
-name = "const-random-macro"
-version = "0.1.16"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f9d839f2a20b0aee515dc581a6172f2321f96cab76c1a38a4c584a194955390e"
-dependencies = [
- "getrandom 0.2.17",
- "once_cell",
- "tiny-keccak",
-]
-
-[[package]]
 name = "core-foundation"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -778,27 +530,6 @@ checksum = "78c8292055d1c1df0cce5d180393dc8cce0abec0a7102adb6c7b1eef6016d60a"
 dependencies = [
  "generic-array",
  "typenum",
-]
-
-[[package]]
-name = "csv"
-version = "1.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "52cd9d68cf7efc6ddfaaee42e7288d3a99d613d4b50f76ce9827ae0c6e14f938"
-dependencies = [
- "csv-core",
- "itoa",
- "ryu",
- "serde_core",
-]
-
-[[package]]
-name = "csv-core"
-version = "0.1.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "704a3c26996a80471189265814dbc2c257598b96b8a7feae2d31ace646bb9782"
-dependencies = [
- "memchr",
 ]
 
 [[package]]
@@ -1068,16 +799,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5baebc0774151f905a1a2cc41989300b1e6fbb29aff0ceffa1064fdd3088d582"
 
 [[package]]
-name = "flatbuffers"
-version = "25.12.19"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "35f6839d7b3b98adde531effaf34f0c2badc6f4735d26fe74709d8e513a96ef3"
-dependencies = [
- "bitflags",
- "rustc_version",
-]
-
-[[package]]
 name = "fnv"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1250,25 +971,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0cc23270f6e1808e30a928bdc84dea0b9b4136a8bc82338574f23baf47bbd280"
 
 [[package]]
-name = "h2"
-version = "0.4.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2f44da3a8150a6703ed5d34e164b875fd14c2cdab9af1252a9a1020bde2bdc54"
-dependencies = [
- "atomic-waker",
- "bytes",
- "fnv",
- "futures-core",
- "futures-sink",
- "http",
- "indexmap",
- "slab",
- "tokio",
- "tokio-util",
- "tracing",
-]
-
-[[package]]
 name = "half"
 version = "2.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1276,7 +978,6 @@ checksum = "6ea2d84b969582b4b1864a92dc5d27cd2b77b622a8d79306834f1be5ba20d84b"
 dependencies = [
  "cfg-if",
  "crunchy",
- "num-traits",
  "zerocopy",
 ]
 
@@ -1371,7 +1072,6 @@ dependencies = [
  "bytes",
  "futures-channel",
  "futures-core",
- "h2",
  "http",
  "http-body",
  "httparse",
@@ -1668,9 +1368,9 @@ dependencies = [
 
 [[package]]
 name = "js-sys"
-version = "0.3.92"
+version = "0.3.93"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cc4c90f45aa2e6eacbe8645f77fdea542ac97a494bcd117a67df9ff4d611f995"
+checksum = "797146bb2677299a1eb6b7b50a890f4c361b29ef967addf5b2fa45dae1bb6d7d"
 dependencies = [
  "cfg-if",
  "futures-util",
@@ -1691,73 +1391,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09edd9e8b54e49e587e4f6295a7d29c3ea94d469cb40ab8ca70b288248a81db2"
 
 [[package]]
-name = "lexical-core"
-version = "1.0.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7d8d125a277f807e55a77304455eb7b1cb52f2b18c143b60e766c120bd64a594"
-dependencies = [
- "lexical-parse-float",
- "lexical-parse-integer",
- "lexical-util",
- "lexical-write-float",
- "lexical-write-integer",
-]
-
-[[package]]
-name = "lexical-parse-float"
-version = "1.0.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "52a9f232fbd6f550bc0137dcb5f99ab674071ac2d690ac69704593cb4abbea56"
-dependencies = [
- "lexical-parse-integer",
- "lexical-util",
-]
-
-[[package]]
-name = "lexical-parse-integer"
-version = "1.0.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a7a039f8fb9c19c996cd7b2fcce303c1b2874fe1aca544edc85c4a5f8489b34"
-dependencies = [
- "lexical-util",
-]
-
-[[package]]
-name = "lexical-util"
-version = "1.0.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2604dd126bb14f13fb5d1bd6a66155079cb9fa655b37f875b3a742c705dbed17"
-
-[[package]]
-name = "lexical-write-float"
-version = "1.0.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "50c438c87c013188d415fbabbb1dceb44249ab81664efbd31b14ae55dabb6361"
-dependencies = [
- "lexical-util",
- "lexical-write-integer",
-]
-
-[[package]]
-name = "lexical-write-integer"
-version = "1.0.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "409851a618475d2d5796377cad353802345cba92c867d9fbcde9cf4eac4e14df"
-dependencies = [
- "lexical-util",
-]
-
-[[package]]
 name = "libc"
 version = "0.2.183"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b5b646652bf6661599e1da8901b3b9522896f01e736bad5f723fe7a3a27f899d"
 
 [[package]]
-name = "libm"
-version = "0.2.16"
+name = "libloading"
+version = "0.8.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b6d2cec3eae94f9f509c767b45932f1ada8350c4bdb85af2fcab4a3c14807981"
+checksum = "d7c4b02199fee7c5d21a5ae7d8cfa79a6ef5bb2fc834d6e9058e89c825efdc55"
+dependencies = [
+ "cfg-if",
+ "windows-link",
+]
 
 [[package]]
 name = "litemap"
@@ -1808,12 +1455,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "mq-demo-strategy"
+version = "0.1.0"
+source = "git+https://github.com/mountainsea-lab/mq-strategy.git?branch=main#53ef25d89b8855570cb21f4b28e4d28937930ecb"
+dependencies = [
+ "anyhow",
+ "log",
+ "nautilus-common",
+ "nautilus-core",
+ "nautilus-model",
+ "nautilus-trading",
+ "rust_decimal",
+]
+
+[[package]]
 name = "mqtrader"
 version = "0.1.0"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
+ "libloading",
  "log",
+ "mq-demo-strategy",
  "nautilus-common",
  "nautilus-core",
  "nautilus-data",
@@ -1831,8 +1494,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-analysis"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -1843,8 +1506,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-common"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -1874,8 +1537,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-core"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -1896,8 +1559,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-cryptography"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "anyhow",
  "aws-lc-rs",
@@ -1913,8 +1576,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-data"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -1931,8 +1594,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-execution"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -1955,8 +1618,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-indicators"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "anyhow",
  "arraydeque",
@@ -1967,8 +1630,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-live"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -1993,14 +1656,12 @@ dependencies = [
 
 [[package]]
 name = "nautilus-model"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
- "arrow",
  "chrono",
- "dashmap",
  "derive_builder",
  "enum_dispatch",
  "evalexpr",
@@ -2022,8 +1683,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-network"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -2055,8 +1716,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-okx"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -2092,8 +1753,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-portfolio"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "log",
@@ -2109,11 +1770,10 @@ dependencies = [
 
 [[package]]
 name = "nautilus-risk"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
- "indexmap",
  "log",
  "nautilus-common",
  "nautilus-core",
@@ -2127,8 +1787,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-system"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -2147,8 +1807,8 @@ dependencies = [
 
 [[package]]
 name = "nautilus-trading"
-version = "0.55.0"
-source = "git+https://github.com/ztNozdormu/nautilus_trader.git?branch=mqtrader#881934fbab642e5b7c561627870b8983cf886256"
+version = "0.54.0"
+source = "git+https://github.com/nautechsystems/nautilus_trader.git?branch=master#076fe374f769ab65654aa5d472f8970ae47607eb"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
@@ -2178,41 +1838,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "num-bigint"
-version = "0.4.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a5e44f723f1133c9deac646763579fdb3ac745e418f2a7af9cd0c431da1f20b9"
-dependencies = [
- "num-integer",
- "num-traits",
-]
-
-[[package]]
-name = "num-complex"
-version = "0.4.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "73f88a1307638156682bada9d7604135552957b7818057dcef22705b4d509495"
-dependencies = [
- "num-traits",
-]
-
-[[package]]
-name = "num-integer"
-version = "0.1.46"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7969661fd2958a5cb096e56c8e1ad0444ac2bbcd0061bd28660485a44879858f"
-dependencies = [
- "num-traits",
-]
-
-[[package]]
 name = "num-traits"
 version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "071dfc062690e90b734c0b2273ce72ad0ffa95f0c74596bc250dcfd960262841"
 dependencies = [
  "autocfg",
- "libm",
 ]
 
 [[package]]
@@ -2663,7 +2294,6 @@ dependencies = [
  "futures-channel",
  "futures-core",
  "futures-util",
- "h2",
  "http",
  "http-body",
  "http-body-util",
@@ -3314,15 +2944,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tiny-keccak"
-version = "2.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c9d3793400a45f954c52e73d068316d76b6f4e36977e3fcebb13a2721e80237"
-dependencies = [
- "crunchy",
-]
-
-[[package]]
 name = "tinystr"
 version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3397,9 +3018,9 @@ dependencies = [
 
 [[package]]
 name = "tokio-tungstenite"
-version = "0.29.0"
+version = "0.28.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8f72a05e828585856dacd553fba484c242c46e391fb0e58917c942ee9202915c"
+checksum = "d25a406cddcc431a75d3d9afc6a7c0f7428d4891dd973e4d54c56b46127bf857"
 dependencies = [
  "futures-util",
  "log",
@@ -3539,9 +3160,9 @@ checksum = "e421abadd41a4225275504ea4d6566923418b7f05506fbc9c0fe86ba7396114b"
 
 [[package]]
 name = "tungstenite"
-version = "0.29.0"
+version = "0.28.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c01152af293afb9c7c2a57e4b559c5620b421f6d133261c60dd2d0cdb38e6b8"
+checksum = "8628dcc84e5a09eb3d8423d6cb682965dea9133204e8fb3efee74c2a0c259442"
 dependencies = [
  "bytes",
  "data-encoding",
@@ -3553,6 +3174,7 @@ dependencies = [
  "rustls-pki-types",
  "sha1",
  "thiserror 2.0.18",
+ "utf-8",
 ]
 
 [[package]]
@@ -3609,6 +3231,12 @@ dependencies = [
  "parking_lot",
  "serde",
 ]
+
+[[package]]
+name = "utf-8"
+version = "0.7.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "09cc8ee72d2a9becf2f2febe0205bbed8fc6615b7cb429ad062dc7b7ddd036a9"
 
 [[package]]
 name = "utf8_iter"
@@ -3685,9 +3313,9 @@ dependencies = [
 
 [[package]]
 name = "wasm-bindgen"
-version = "0.2.115"
+version = "0.2.116"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6523d69017b7633e396a89c5efab138161ed5aafcbc8d3e5c5a42ae38f50495a"
+checksum = "7dc0882f7b5bb01ae8c5215a1230832694481c1a4be062fd410e12ea3da5b631"
 dependencies = [
  "cfg-if",
  "once_cell",
@@ -3699,9 +3327,9 @@ dependencies = [
 
 [[package]]
 name = "wasm-bindgen-futures"
-version = "0.4.65"
+version = "0.4.66"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2d1faf851e778dfa54db7cd438b70758eba9755cb47403f3496edd7c8fc212f0"
+checksum = "19280959e2844181895ef62f065c63e0ca07ece4771b53d89bfdb967d97cbf05"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
@@ -3709,9 +3337,9 @@ dependencies = [
 
 [[package]]
 name = "wasm-bindgen-macro"
-version = "0.2.115"
+version = "0.2.116"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e3a6c758eb2f701ed3d052ff5737f5bfe6614326ea7f3bbac7156192dc32e67"
+checksum = "75973d3066e01d035dbedaad2864c398df42f8dd7b1ea057c35b8407c015b537"
 dependencies = [
  "quote",
  "wasm-bindgen-macro-support",
@@ -3719,9 +3347,9 @@ dependencies = [
 
 [[package]]
 name = "wasm-bindgen-macro-support"
-version = "0.2.115"
+version = "0.2.116"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "921de2737904886b52bcbb237301552d05969a6f9c40d261eb0533c8b055fedf"
+checksum = "91af5e4be765819e0bcfee7322c14374dc821e35e72fa663a830bbc7dc199eac"
 dependencies = [
  "bumpalo",
  "proc-macro2",
@@ -3732,9 +3360,9 @@ dependencies = [
 
 [[package]]
 name = "wasm-bindgen-shared"
-version = "0.2.115"
+version = "0.2.116"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a93e946af942b58934c604527337bad9ae33ba1d5c6900bbb41c2c07c2364a93"
+checksum = "c9bf0406a78f02f336bf1e451799cca198e8acde4ffa278f0fb20487b150a633"
 dependencies = [
  "unicode-ident",
 ]
@@ -3788,9 +3416,9 @@ dependencies = [
 
 [[package]]
 name = "web-sys"
-version = "0.3.92"
+version = "0.3.93"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "84cde8507f4d7cfcb1185b8cb5890c494ffea65edbe1ba82cfd63661c805ed94"
+checksum = "749466a37ee189057f54748b200186b59a03417a117267baf3fd89cecc9fb837"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
@@ -4198,9 +3826,9 @@ checksum = "d6bbff5f0aada427a1e5a6da5f1f98158182f26556f345ac9e04d36d0ebed650"
 
 [[package]]
 name = "winnow"
-version = "1.0.0"
+version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a90e88e4667264a994d34e6d1ab2d26d398dcdca8b7f52bec8668957517fc7d8"
+checksum = "09dac053f1cd375980747450bfc7250c264eaae0583872e845c0c7cd578872b5"
 dependencies = [
  "memchr",
 ]

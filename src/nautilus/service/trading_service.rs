@@ -3,6 +3,8 @@ use crate::nautilus::trading_kernel::TradingKernel;
 use ahash::AHashMap;
 use anyhow::Result;
 use log::LevelFilter;
+use mq_strategy_common::config::ExecTesterConfig;
+use mq_strategy_common::strategy::ExecTester;
 use nautilus_common::cache::CacheConfig;
 use nautilus_common::enums::{Environment, SerializationEncoding};
 use nautilus_common::logging::logger::LoggerConfig;
@@ -11,7 +13,8 @@ use nautilus_core::UUID4;
 use nautilus_live::config::{
     LiveDataEngineConfig, LiveExecEngineConfig, LiveNodeConfig, LiveRiskEngineConfig,
 };
-use nautilus_model::identifiers::{AccountId, InstrumentId, TraderId};
+use nautilus_model::identifiers::{AccountId, ClientId, InstrumentId, StrategyId, TraderId};
+use nautilus_model::types::Quantity;
 use nautilus_okx::OKXInstrumentType;
 use nautilus_okx::common::enums::OKXContractType;
 use nautilus_portfolio::config::PortfolioConfig;
@@ -87,14 +90,42 @@ impl TradingService {
         Ok(node_config)
     }
     /// todo 通过插件方式加载策略
-    fn load_strategies(_launcher: &mut TradingKernel) -> Result<()> {
+    fn load_strategies(launcher: &mut TradingKernel) -> Result<()> {
         // /// "BTC", "ETH", 主流币比较稳定做四小时以上周期 "ADA", "XRP", "BNB", "AVAX", "DOGE", "ETC", "AAVE",
         // // 示例：我们要批量构建以下资产的策略
         // let assets = vec!["SOL", "ETH", "LINK", "XRP"];
         // // 调用批量构建函数并指定时间框架
         // let gmmasr_strategies = Self::build_batch_strategies(assets, "5-MINUTE", "USDT-SWAP.OKX");
         // launcher.add_strategies(gmmasr_strategies)?;
+        let instrument_id = InstrumentId::from("SOL-USDT-SWAP.OKX");
+        let account_id = AccountId::from("OKX-001");
+        let client_id = ClientId::new("OKX");
+        let mut tester_config = ExecTesterConfig::new(
+            StrategyId::from("EXEC_TESTER-001"),
+            instrument_id,
+            client_id,
+            Quantity::from("0.01"),
+        )
+        .with_log_data(false)
+        // .with_enable_limit_buys(false)
+        // .with_enable_limit_sells(false)
+        // .with_enable_stop_sells(true)
+        // .with_stop_order_type(OrderType::TrailingStopMarket)
+        // .with_trailing_offset(Decimal::from(100))
+        // .with_trailing_offset_type(TrailingOffsetType::BasisPoints)
+        // .with_stop_offset_ticks(50)
+        .with_cancel_orders_on_stop(true)
+        .with_close_positions_on_stop(true);
 
+        tester_config.base.external_order_claims = Some(vec![instrument_id]);
+
+        // Use UUIDs for unique client order IDs across restarts
+        tester_config.base.use_uuid_client_order_ids = true;
+        // OKX doesn't allow hyphens in client order IDs
+        tester_config.base.use_hyphens_in_client_order_ids = false;
+
+        let tester = ExecTester::new(tester_config);
+        launcher.add_strategy(tester)?;
         Ok(())
     }
 
