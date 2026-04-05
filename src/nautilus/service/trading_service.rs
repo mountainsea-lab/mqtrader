@@ -1,10 +1,9 @@
-use crate::helper::load_dyn::load_strategy;
 use crate::nautilus::config::exchange::okx::{OkxExchangeConfig, OkxProviderFilters};
 use crate::nautilus::trading_kernel::TradingKernel;
 use ahash::AHashMap;
-use anyhow::Result;
-use dynwrap_strategy::strategy_wrapper::DynStrategyWrapper;
-use log::LevelFilter;
+use anyhow::{Context, Result};
+use dynwrap_strategy::strategy_wrapper_ffi::DynStrategyWrapper;
+use log::{LevelFilter, info};
 use nautilus_common::cache::CacheConfig;
 use nautilus_common::enums::{Environment, SerializationEncoding};
 use nautilus_common::logging::logger::LoggerConfig;
@@ -17,6 +16,8 @@ use nautilus_model::identifiers::{AccountId, InstrumentId, TraderId};
 use nautilus_okx::OKXInstrumentType;
 use nautilus_okx::common::enums::OKXContractType;
 use nautilus_portfolio::config::PortfolioConfig;
+use std::env;
+use std::path::Path;
 use ustr::Ustr;
 
 pub struct TradingService;
@@ -88,18 +89,51 @@ impl TradingService {
 
         Ok(node_config)
     }
-    /// todo 通过插件方式加载策略
-    fn load_strategies(launcher: &mut TradingKernel) -> Result<()> {
-        match load_strategy() {
-            Ok(strategy) => {
-                // 使用包装器将 `Box<dyn Strategy>` 转换为 `DynStrategyWrapper`
-                let wrapped_strategy = DynStrategyWrapper::new(strategy)?;
-                launcher.add_strategy(wrapped_strategy)?;
-            }
-            Err(e) => {
-                panic!("Failed to load strategy: {:?}", e);
-            }
+
+    /// 获取策略动态库路径（自动适配平台扩展名）
+    fn get_strategy_lib_path() -> Result<String> {
+        let base_path =
+            env::var("STRATEGY_LIB").context("STRATEGY_LIB environment variable not set")?;
+
+        let path = Path::new(&base_path);
+
+        // 如果已有扩展名，直接返回
+        if path.extension().is_some() {
+            return Ok(base_path);
         }
+
+        // 否则添加平台特定扩展名
+        let mut path_buf = path.to_path_buf();
+        #[cfg(target_os = "linux")]
+        path_buf.set_extension("so");
+        #[cfg(target_os = "macos")]
+        path_buf.set_extension("dylib");
+        #[cfg(target_os = "windows")]
+        path_buf.set_extension("dll");
+
+        path_buf
+            .to_str()
+            .map(|s| s.to_string())
+            .context("Failed to convert path to string")
+    }
+
+    /// 加载策略插件
+    pub fn load_strategies(launcher: &mut TradingKernel) -> Result<()> {
+        // 获取动态库路径
+        let lib_path = Self::get_strategy_lib_path()?;
+        info!("Loading strategy from: {}", lib_path);
+
+        // 获取配置路径
+        let config_path =
+            env::var("STRATEGY_CONFIG").context("STRATEGY_CONFIG environment variable not set")?;
+        info!("Using config: {}", config_path);
+
+        // 加载动态库策略
+        let strategy = DynStrategyWrapper::load(Path::new(&lib_path), &config_path)
+            .context(format!("Failed to load strategy from {}", lib_path))?;
+
+        launcher.add_strategy(strategy)?;
+        info!("Strategy loaded successfully");
 
         Ok(())
     }

@@ -40,6 +40,3 @@ serde_json = "1"
 ustr = { version = "1.1.0", features = ["serde"] }
 log = "0.4.29"
 ahash = { version = "0.8.12", features = ["serde"] }
-
-# -- Load Dyn Strategy
-libloading = "0.8"

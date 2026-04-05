@@ -735,9 +735,11 @@ checksum = "92773504d58c093f6de2459af4af33faa518c13451eb8f2b5698ed3d36e7c813"
 [[package]]
 name = "dynwrap-strategy"
 version = "0.1.0"
-source = "git+https://github.com/mountainsea-lab/mq-strategy.git?branch=main#381ea620353ccb68c4f8e15478e1960a66d11df6"
+source = "git+https://github.com/mountainsea-lab/mq-strategy.git?branch=main#456e205b9c0bcb121b15e65b537ed942154527e4"
 dependencies = [
  "anyhow",
+ "libloading",
+ "log",
  "mq-strategy-common",
  "nautilus-common",
  "nautilus-model",
@@ -1481,7 +1483,7 @@ dependencies = [
 [[package]]
 name = "mq-strategy-common"
 version = "0.1.0"
-source = "git+https://github.com/mountainsea-lab/mq-strategy.git?branch=main#381ea620353ccb68c4f8e15478e1960a66d11df6"
+source = "git+https://github.com/mountainsea-lab/mq-strategy.git?branch=main#456e205b9c0bcb121b15e65b537ed942154527e4"
 dependencies = [
  "anyhow",
  "log",
@@ -1498,7 +1500,6 @@ dependencies = [
  "ahash 0.8.12",
  "anyhow",
  "dynwrap-strategy",
- "libloading",
  "log",
  "nautilus-common",
  "nautilus-core",
