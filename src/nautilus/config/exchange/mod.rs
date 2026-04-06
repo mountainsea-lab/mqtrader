@@ -1,6 +1,6 @@
 // config/exchange/exchange.rs
 
-use crate::nautilus::config::exchange::okx::OkxProviderFilters;
+use crate::nautilus::config::exchange::okx::{OkxExchangeConfig, OkxProviderFilters};
 use crate::nautilus::config::exchange::okx_exchange_config_dto::OkxExchangeConfigDTO;
 use nautilus_live::config::{LiveDataClientConfig, LiveExecClientConfig};
 use nautilus_model::identifiers::{InstrumentId, Venue};
@@ -53,6 +53,20 @@ pub enum ExchangeConfigDTO {
     Okx(OkxExchangeConfigDTO),
     // Binance(BinanceExchangeConfigDTO),
     // Bybit(BybitExchangeConfigDTO),
+}
+impl ExchangeConfigDTO {
+    pub fn into_box(&self) -> anyhow::Result<Box<dyn ExchangeConfig>> {
+        match self {
+            ExchangeConfigDTO::Okx(dto) => {
+                // 通过 TryFrom 转成 OkxExchangeConfig
+                let cfg: OkxExchangeConfig = dto.clone().try_into()?;
+                Ok(Box::new(cfg))
+            } // ExchangeConfigDTO::Binance(dto) => {
+              //     let cfg: BinanceExchangeConfig = dto.clone().try_into()?;
+              //     Ok(Box::new(cfg))
+              // }
+        }
+    }
 }
 
 pub mod okx;

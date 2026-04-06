@@ -1,5 +1,6 @@
 use std::str::FromStr;
 
+pub mod bot;
 pub mod config;
 pub mod service;
 pub mod trading_kernel;

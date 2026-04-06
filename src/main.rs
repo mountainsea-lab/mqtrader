@@ -1,8 +1,8 @@
 use anyhow::Result;
-use mqtrader::nautilus::service::trading_service::TradingService;
+use mqtrader::nautilus::bot::mqtrader::MqTrader;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    TradingService::run(true).await?;
+    MqTrader::run().await?;
     Ok(())
 }

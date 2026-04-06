@@ -1,4 +1,4 @@
-use crate::nautilus::config::exchange::ExchangeConfigDTO;
+use crate::nautilus::config::exchange::{ExchangeConfig, ExchangeConfigDTO};
 use crate::nautilus::config::node::logger_config_dto::LoggerConfigDTO;
 use anyhow::Result;
 use dynwrap_strategy::SConfigSerializable;
@@ -12,7 +12,6 @@ use nautilus_live::config::{
 };
 use nautilus_model::identifiers::TraderId;
 use nautilus_portfolio::config::PortfolioConfig;
-use nautilus_system::StreamingConfig;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -35,7 +34,6 @@ pub struct NodeConfigDTO {
     pub timeout_shutdown_secs: u64,
 
     pub exchanges: HashMap<String, ExchangeConfigDTO>, // key: "OKX", "BINANCE"…
-
     pub logging: LoggerConfigDTO,
     pub cache: Option<CacheConfig>,
     pub msgbus: Option<MessageBusConfig>,
@@ -126,6 +124,27 @@ impl From<&LiveNodeConfig> for NodeConfigDTO {
     }
 }
 impl SConfigSerializable for NodeConfigDTO {}
+
+impl NodeConfigDTO {
+    pub fn into_node_config(
+        &self,
+    ) -> Result<(LiveNodeConfig, HashMap<String, Box<dyn ExchangeConfig>>)> {
+        // 1️⃣ 先转换 NodeConfigDTO -> LiveNodeConfig
+        let node_config = LiveNodeConfig::try_from(self.clone())?;
+
+        // 2️⃣ 转换交易所 DTO -> Box<dyn ExchangeConfig>
+        let live_exchanges = self
+            .exchanges
+            .iter()
+            .map(|(k, v)| {
+                let boxed = v.into_box()?; // 注意这里返回 Result
+                Ok((k.clone(), boxed))
+            })
+            .collect::<Result<HashMap<_, _>>>()?;
+
+        Ok((node_config, live_exchanges))
+    }
+}
 
 #[cfg(test)]
 mod tests {
