@@ -18,7 +18,7 @@ RUST_LOG="mqtrader=info"
 # e.g., "welcome" type of passwords.
 # i.e., Encryption not needed.
 # mqtrader
-TRADER_NODE_CONFIG = "./config/libmq_demo_strategy.json" # 交易节点配置路径
+TRADER_NODE_CONFIG = "./config/node_config.json" # 交易节点配置路径
 STRATEGY_CONFIG = "./config/libmq_demo_strategy.json"  # 策略配置路径
 STRATEGY_LIB = "./strategies/libmq_demo_strategy"  # 策略动态库路径
 
