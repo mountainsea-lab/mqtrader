@@ -46,3 +46,4 @@ pub trait ExchangeConfig {
 }
 
 pub mod okx;
+mod okx_exchange_config_dto;
