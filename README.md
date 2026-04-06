@@ -17,3 +17,7 @@ mqtrader 是一个基于 nautilus_trader 库封装的量化交易系统，旨在
 ```shell
      docker-compose down
 ```
+## 配置文件
+创建config目录,存放demo_strategy.json,node_config.json
+## 策略动态库
+创建strategies demo_strategy.dylib/.so
