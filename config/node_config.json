@@ -31,9 +31,9 @@
           "XRP-USDT"
         ]
       },
-      "api_key": "464e0adf-7f02-47ac-82d3-95736b15a114",
-      "api_secret": "0D76268C7336050D755209E19AE7B5AA",
-      "passphrase": "@8NautilusTrader",
+      "api_key": "",
+      "api_secret": "",
+      "passphrase": "",
       "is_demo": true,
       "load_all": false
     }
