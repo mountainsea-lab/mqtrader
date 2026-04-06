@@ -1,9 +1,11 @@
 // config/exchange/exchange.rs
 
 use crate::nautilus::config::exchange::okx::OkxProviderFilters;
+use crate::nautilus::config::exchange::okx_exchange_config_dto::OkxExchangeConfigDTO;
 use nautilus_live::config::{LiveDataClientConfig, LiveExecClientConfig};
 use nautilus_model::identifiers::{InstrumentId, Venue};
 use nautilus_system::{ClientConfig, DataClientFactory, ExecutionClientFactory};
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
 
@@ -45,5 +47,13 @@ pub trait ExchangeConfig {
     fn live_clients(&self) -> LiveExchangeClients;
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "type")]
+pub enum ExchangeConfigDTO {
+    Okx(OkxExchangeConfigDTO),
+    // Binance(BinanceExchangeConfigDTO),
+    // Bybit(BybitExchangeConfigDTO),
+}
+
 pub mod okx;
-mod okx_exchange_config_dto;
+pub mod okx_exchange_config_dto;

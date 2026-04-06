@@ -16,7 +16,7 @@ pub struct OkxExchangeConfigDTO {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct OkxProviderFiltersDTO {
-    pub instrument_types: Vec<String>, // 可以序列化成字符串
+    pub instrument_types: Vec<String>,
     pub contract_types: Option<Vec<String>>,
     pub instrument_families: Option<Vec<String>>,
 }

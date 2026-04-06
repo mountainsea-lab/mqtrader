@@ -1,3 +1,4 @@
+use crate::nautilus::config::exchange::ExchangeConfigDTO;
 use crate::nautilus::config::node::logger_config_dto::LoggerConfigDTO;
 use anyhow::Result;
 use dynwrap_strategy::SConfigSerializable;
@@ -32,6 +33,8 @@ pub struct NodeConfigDTO {
     pub timeout_disconnection_secs: u64,
     pub delay_post_stop_secs: u64,
     pub timeout_shutdown_secs: u64,
+
+    pub exchanges: HashMap<String, ExchangeConfigDTO>, // key: "OKX", "BINANCE"…
 
     pub logging: LoggerConfigDTO,
     pub cache: Option<CacheConfig>,
@@ -107,6 +110,7 @@ impl From<&LiveNodeConfig> for NodeConfigDTO {
             delay_post_stop_secs: cfg.delay_post_stop.as_secs(),
             timeout_shutdown_secs: cfg.timeout_shutdown.as_secs(),
 
+            exchanges: HashMap::new(),
             logging: (&cfg.logging).into(),
             cache: cfg.cache.clone(),
             msgbus: cfg.msgbus.clone(),
@@ -126,6 +130,8 @@ impl SConfigSerializable for NodeConfigDTO {}
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::nautilus::config::exchange::okx::OkxExchangeConfig;
+    use crate::nautilus::config::exchange::okx_exchange_config_dto::OkxExchangeConfigDTO;
     use crate::nautilus::service::trading_service::TradingService;
     #[test]
     fn test_node_config_file_roundtrip() -> Result<()> {
@@ -136,7 +142,13 @@ mod tests {
         let original = TradingService::build_node_config()?;
 
         // 2️⃣ 转 DTO
-        let dto = NodeConfigDTO::from(&original);
+        let mut dto = NodeConfigDTO::from(&original);
+
+        let mut exchanges = HashMap::new();
+        let okx_config = OkxExchangeConfig::build_demo();
+        let okx_dto: OkxExchangeConfigDTO = (&okx_config).into();
+        exchanges.insert("OKX".to_string(), ExchangeConfigDTO::Okx(okx_dto));
+        dto.exchanges = exchanges;
 
         // 3️⃣ 写入 config 目录
         let config_dir = Path::new("config");
@@ -144,13 +156,12 @@ mod tests {
             fs::create_dir_all(config_dir)?;
         }
 
-        let file_path = config_dir.join("test_node_config.json");
+        let file_path = config_dir.join("node_config.json");
 
         dto.write_to_file(&file_path)?;
 
         // 4️⃣ 从文件读取 DTO
         let dto2 = NodeConfigDTO::from_file(&file_path)?;
-
         // 5️⃣ 转回 LiveNodeConfig
         let rebuilt = LiveNodeConfig::try_from(dto2)?;
 
@@ -185,21 +196,41 @@ mod tests {
 
         // 1️⃣ 构建配置
         let original = TradingService::build_node_config()?;
-        let dto = NodeConfigDTO::from(&original);
+        let mut dto = NodeConfigDTO::from(&original);
 
-        // 2️⃣ 写入
+        // 2️⃣ 补充交易所配置
+        let mut exchanges = HashMap::new();
+        let okx_config = OkxExchangeConfig::build_demo();
+        let okx_dto: OkxExchangeConfigDTO = (&okx_config).into();
+        exchanges.insert("OKX".to_string(), ExchangeConfigDTO::Okx(okx_dto));
+        dto.exchanges = exchanges;
+
+        // 3️⃣ 写入
         dto.write_to_file(&file_path)?;
 
-        // 3️⃣ 读取
+        // 4️⃣ 读取
         let dto_loaded = NodeConfigDTO::from_file(&file_path)?;
-
-        // 4️⃣ 转换
+        let dto_loaded_clone = dto_loaded.clone();
+        // 5️⃣ 转换
         let config = LiveNodeConfig::try_from(dto_loaded)?;
 
-        // 5️⃣ 断言
+        // 6️⃣ 断言
         assert_eq!(config.trader_id, original.trader_id);
         assert_eq!(config.load_state, original.load_state);
 
+        // 7️⃣ 交易所字段断言
+        if let Some(ExchangeConfigDTO::Okx(okx)) = dto_loaded_clone.exchanges.get("OKX") {
+            // assert_eq!(okx.account_id, okx_config.account_id);
+            assert_eq!(okx.load_all, okx_config.load_all);
+            assert_eq!(okx.is_demo, okx_config.is_demo);
+            // assert_eq!(okx.instrument_ids, okx_config.instrument_ids);
+            assert_eq!(
+                okx.filters.as_ref().unwrap().instrument_families,
+                okx_config.filters.as_ref().unwrap().instrument_families
+            );
+        } else {
+            panic!("OKX exchange config missing in loaded NodeConfig");
+        }
         Ok(())
     }
 }

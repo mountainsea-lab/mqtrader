@@ -118,6 +118,34 @@ impl OkxExchangeConfig {
             is_demo,
         }
     }
+
+    /// 构建默认 OKX 配置（示例/测试用）
+    pub fn build_demo() -> Self {
+        let api_key = Some("464e0adf-7f02-47ac-82d3-95736b15a114".to_string());
+        let api_secret = Some("0D76268C7336050D755209E19AE7B5AA".to_string());
+        let passphrase = Some("@8NautilusTrader".to_string());
+
+        OkxExchangeConfig {
+            account_id: AccountId::from("OKX-008"),
+            instrument_ids: Some(vec![InstrumentId::from("ETH-USDT-SWAP.OKX")]),
+            filters: Some(OkxProviderFilters {
+                instrument_types: vec![OKXInstrumentType::Swap],
+                contract_types: Some(vec![OKXContractType::Linear]),
+                instrument_families: Some(vec![
+                    "ETH-USDT".to_string(),
+                    "SOL-USDT".to_string(),
+                    "LINK-USDT".to_string(),
+                    "XRP-USDT".to_string(),
+                ]),
+            }),
+            api_key,
+            api_secret,
+            passphrase,
+            is_demo: true,
+            load_all: false,
+            ..Default::default() // 其他字段保留 Default
+        }
+    }
 }
 
 impl ExchangeConfig for OkxExchangeConfig {

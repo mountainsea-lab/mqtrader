@@ -3,20 +3,48 @@
   "trader_id": "OKX-TRADER-001",
   "load_state": false,
   "save_state": false,
-  "instance_id": "23f0c878-3d97-44b7-9169-ff0d7d25adac",
+  "instance_id": "d27666da-1667-4755-a40b-05491a1cae06",
   "timeout_connection_secs": 60,
   "timeout_reconciliation_secs": 10,
   "timeout_portfolio_secs": 60,
   "timeout_disconnection_secs": 10,
   "delay_post_stop_secs": 0,
   "timeout_shutdown_secs": 0,
+  "exchanges": {
+    "OKX": {
+      "type": "Okx",
+      "account_id": "OKX-008",
+      "instrument_ids": [
+        "ETH-USDT-SWAP.OKX"
+      ],
+      "filters": {
+        "instrument_types": [
+          "Swap"
+        ],
+        "contract_types": [
+          "Linear"
+        ],
+        "instrument_families": [
+          "ETH-USDT",
+          "SOL-USDT",
+          "LINK-USDT",
+          "XRP-USDT"
+        ]
+      },
+      "api_key": "464e0adf-7f02-47ac-82d3-95736b15a114",
+      "api_secret": "0D76268C7336050D755209E19AE7B5AA",
+      "passphrase": "@8NautilusTrader",
+      "is_demo": true,
+      "load_all": false
+    }
+  },
   "logging": {
     "stdout_level": "Info",
     "fileout_level": "Off",
     "component_level": {},
     "module_level": {
-      "nautilus_execution::": "Info",
-      "strategy::gmmasr::gmmasr_strategy": "Info"
+      "strategy::gmmasr::gmmasr_strategy": "Info",
+      "nautilus_execution::": "Info"
     },
     "log_components_only": false,
     "is_colored": false,
