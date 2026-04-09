@@ -5,7 +5,9 @@ use crate::nautilus::trading_kernel::TradingKernel;
 use anyhow::{Context, Result};
 use dynwrap_strategy::SConfigSerializable;
 use dynwrap_strategy::strategy_wrapper_ffi::DynStrategyWrapper;
-use log::info;
+use log::{debug, info};
+use staticwrap_strategy::types::StrategyType;
+use staticwrap_strategy::wrapper::StrategyWrapper;
 use std::env;
 use std::path::Path;
 
@@ -19,7 +21,7 @@ impl MqTrader {
         // 构建 async 内核
         let mut launcher = Self::build_kernel().await?;
         // 加入策略
-        Self::load_strategies(&mut launcher)?;
+        Self::load_static_strategies(&mut launcher)?;
         launcher.run().await?;
 
         Ok(())
@@ -56,6 +58,24 @@ impl MqTrader {
             .context(format!("Failed to load strategy from {}", lib_path))?;
 
         launcher.add_strategy(strategy)?;
+        info!("Strategy loaded successfully");
+
+        Ok(())
+    }
+
+    /// 加载静态策略插件
+    pub fn load_static_strategies(launcher: &mut TradingKernel) -> Result<()> {
+        // 获取配置路径
+        let config_path =
+            env::var("STRATEGY_CONFIG").context("STRATEGY_CONFIG environment variable not set")?;
+        info!("Using config: {}", config_path);
+
+        let strategy_wrapper = StrategyWrapper::create(StrategyType::ExecTester, &config_path)?;
+        if let Some(strategy) = strategy_wrapper.into_exec_tester() {
+            launcher.add_strategy(strategy)?;
+        } else {
+            debug!("No strategy found in strategy wrapper");
+        }
         info!("Strategy loaded successfully");
 
         Ok(())

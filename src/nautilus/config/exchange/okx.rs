@@ -246,12 +246,12 @@ impl ExchangeConfig for OkxExchangeConfig {
                 http_proxy_url: None,
                 ws_proxy_url: None,
                 // 可选但推荐的配置
-                use_fills_channel: false,            // VIP5+才可用
-                use_mm_mass_cancel: false,           // 做市商批量撤单功能
-                http_timeout_secs: Some(60),         // HTTP超时设置
-                max_retries: Some(3),                // 最大重试次数
-                retry_delay_initial_ms: Some(1_000), // 初始重试延迟
-                retry_delay_max_ms: Some(10_000),    // 最大重试延迟
+                use_fills_channel: false,      // VIP5+才可用
+                use_mm_mass_cancel: false,     // 做市商批量撤单功能
+                http_timeout_secs: 60u64,      // HTTP超时设置
+                max_retries: 3u32,             // 最大重试次数
+                retry_delay_initial_ms: 1_000, // 初始重试延迟
+                retry_delay_max_ms: 10_000,    // 最大重试延迟
                 ..Default::default()
             })),
             data_client_factory: Some(data_client_factory),
