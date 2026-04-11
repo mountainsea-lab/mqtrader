@@ -44,7 +44,6 @@ ENV STRATEGY_CONFIG=/app/config/libmq_demo_strategy.json \
     STRATEGY_LIB=/app/strategies/libmq_demo_strategy
 
 COPY --from=builder /app/target/release/${SERVICE} /usr/local/bin/${SERVICE}
-COPY /Volumes/wdata/mountainsea-lab/mq-strategy-L/strategy/staticwrap-strategy /Volumes/wdata/mountainsea-lab/mq-strategy-L/strategy/staticwrap-strategy
 
 ENV APP_ENV=production \
     RUST_BACKTRACE=1 \
