@@ -44,6 +44,10 @@ ENV STRATEGY_CONFIG=/app/config/libmq_demo_strategy.json \
     STRATEGY_LIB=/app/strategies/libmq_demo_strategy
 
 COPY --from=builder /app/target/release/${SERVICE} /usr/local/bin/${SERVICE}
+COPY ~/.ssh /root/.ssh
+RUN chmod 700 /root/.ssh && chmod 600 /root/.ssh/id_rsa
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+RUN ssh-agent bash -c 'ssh-add /root/.ssh/id_rsa'
 
 ENV APP_ENV=production \
     RUST_BACKTRACE=1 \
