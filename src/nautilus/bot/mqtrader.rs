@@ -6,10 +6,12 @@ use anyhow::{Context, Result};
 use dynwrap_strategy::SConfigSerializable;
 use dynwrap_strategy::strategy_wrapper_ffi::DynStrategyWrapper;
 use log::{debug, info};
+use staticwrap_strategy::{ExecTester, GmmasrStrategy};
 use staticwrap_strategy::types::StrategyType;
 use staticwrap_strategy::wrapper::StrategyWrapper;
 use std::env;
 use std::path::Path;
+use staticwrap_strategy::wrapper::StrategyExtractor;
 
 pub struct MqTrader;
 
@@ -70,11 +72,12 @@ impl MqTrader {
             env::var("STRATEGY_CONFIG").context("STRATEGY_CONFIG environment variable not set")?;
         info!("Using config: {}", config_path);
 
-        let strategy_wrapper = StrategyWrapper::create(StrategyType::ExecTester, &config_path)?;
-        if let Some(strategy) = strategy_wrapper.into_exec_tester() {
-            launcher.add_strategy(strategy)?;
+        let strategy_wrapper = StrategyWrapper::create(StrategyType::Gmmasr, &config_path)?;
+        // Extract ExecTester
+        if let Some(strategy) = strategy_wrapper.extract(){
+            launcher.add_strategy::<GmmasrStrategy>(strategy)?;
         } else {
-            debug!("No strategy found in strategy wrapper");
+            debug!("Strategy not found");
         }
         info!("Strategy loaded successfully");
 

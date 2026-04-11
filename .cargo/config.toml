@@ -19,7 +19,8 @@ RUST_LOG="mqtrader=info"
 # i.e., Encryption not needed.
 # mqtrader
 TRADER_NODE_CONFIG = "./config/node_config.json" # 交易节点配置路径
-STRATEGY_CONFIG = "./config/libmq_demo_strategy.json"  # 策略配置路径
+#STRATEGY_CONFIG = "./config/libmq_demo_strategy.json"  # 策略配置路径
+STRATEGY_CONFIG = "./config/ETH-USDT-SWAP.OKX.json"  # 策略配置路径
 STRATEGY_LIB = "./strategies/libmq_demo_strategy"  # 策略动态库路径
 
 WEBSOCKET_PROXY_ENABLED= "true"  # false 禁用代理 true 开启代理
