@@ -7,6 +7,8 @@
 # Scope down tracing, to filter out external lib tracing.
 RUST_LOG="mqtrader=info"
 
+[net]
+git-fetch-with-cli = true
 # -- Service Environment Variables
 # IMPORTANT: 
 #   For cargo commands only.

@@ -1004,27 +1004,12 @@ checksum = "92773504d58c093f6de2459af4af33faa518c13451eb8f2b5698ed3d36e7c813"
 [[package]]
 name = "dynwrap-strategy"
 version = "0.1.0"
+source = "git+ssh://git@github.com/mountainsea-lab/mq-strategy-L.git?branch=main#b9f3aad4b131fa4733598dc94e7a620c10ac8403"
 dependencies = [
  "anyhow",
  "libloading",
  "log",
- "mq-strategy-common 0.1.0",
- "nautilus-common",
- "nautilus-model",
- "nautilus-trading",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "dynwrap-strategy"
-version = "0.1.0"
-source = "git+https://github.com/mountainsea-lab/mq-strategy.git?branch=main#e677524f77e0a6b8407a64176c17865465ee86d4"
-dependencies = [
- "anyhow",
- "libloading",
- "log",
- "mq-strategy-common 0.1.0 (git+https://github.com/mountainsea-lab/mq-strategy.git?branch=main)",
+ "mq-strategy-common",
  "nautilus-common",
  "nautilus-model",
  "nautilus-trading",
@@ -1293,12 +1278,13 @@ checksum = "0cc23270f6e1808e30a928bdc84dea0b9b4136a8bc82338574f23baf47bbd280"
 [[package]]
 name = "gmmasr-strategy"
 version = "0.1.0"
+source = "git+ssh://git@github.com/mountainsea-lab/mq-strategy-L.git?branch=main#b9f3aad4b131fa4733598dc94e7a620c10ac8403"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
- "dynwrap-strategy 0.1.0",
+ "dynwrap-strategy",
  "log",
- "mq-strategy-common 0.1.0",
+ "mq-strategy-common",
  "mq-strategy-indicators",
  "nautilus-common",
  "nautilus-core",
@@ -1903,11 +1889,12 @@ dependencies = [
 [[package]]
 name = "mq-demo-strategy"
 version = "0.1.0"
+source = "git+ssh://git@github.com/mountainsea-lab/mq-strategy-L.git?branch=main#b9f3aad4b131fa4733598dc94e7a620c10ac8403"
 dependencies = [
  "anyhow",
- "dynwrap-strategy 0.1.0",
+ "dynwrap-strategy",
  "log",
- "mq-strategy-common 0.1.0",
+ "mq-strategy-common",
  "nautilus-common",
  "nautilus-core",
  "nautilus-model",
@@ -1920,19 +1907,7 @@ dependencies = [
 [[package]]
 name = "mq-strategy-common"
 version = "0.1.0"
-dependencies = [
- "anyhow",
- "log",
- "nautilus-model",
- "rust_decimal",
- "serde",
- "time",
-]
-
-[[package]]
-name = "mq-strategy-common"
-version = "0.1.0"
-source = "git+https://github.com/mountainsea-lab/mq-strategy.git?branch=main#e677524f77e0a6b8407a64176c17865465ee86d4"
+source = "git+ssh://git@github.com/mountainsea-lab/mq-strategy-L.git?branch=main#b9f3aad4b131fa4733598dc94e7a620c10ac8403"
 dependencies = [
  "anyhow",
  "log",
@@ -1945,6 +1920,7 @@ dependencies = [
 [[package]]
 name = "mq-strategy-indicators"
 version = "0.1.0"
+source = "git+ssh://git@github.com/mountainsea-lab/mq-strategy-L.git?branch=main#b9f3aad4b131fa4733598dc94e7a620c10ac8403"
 dependencies = [
  "nautilus-core",
  "nautilus-indicators",
@@ -1958,7 +1934,7 @@ version = "0.1.0"
 dependencies = [
  "ahash 0.8.12",
  "anyhow",
- "dynwrap-strategy 0.1.0 (git+https://github.com/mountainsea-lab/mq-strategy.git?branch=main)",
+ "dynwrap-strategy",
  "jemallocator",
  "log",
  "nautilus-common",
@@ -3324,9 +3300,10 @@ checksum = "6ce2be8dc25455e1f91df71bfa12ad37d7af1092ae736f3a6cd0e37bc7810596"
 [[package]]
 name = "staticwrap-strategy"
 version = "0.1.0"
+source = "git+ssh://git@github.com/mountainsea-lab/mq-strategy-L.git?branch=main#b9f3aad4b131fa4733598dc94e7a620c10ac8403"
 dependencies = [
  "anyhow",
- "dynwrap-strategy 0.1.0",
+ "dynwrap-strategy",
  "gmmasr-strategy",
  "mq-demo-strategy",
  "nautilus-trading",
