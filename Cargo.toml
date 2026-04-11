@@ -3,22 +3,12 @@ name = "mqtrader"
 version = "0.1.0"
 edition = "2024"
 
-
 [dependencies]
+# -- Memory
+jemallocator = "0.3"
 # -- Async
 tokio = { version = "1.48.0", features = ["full"] }
 anyhow = "^1.0.102"
-
-# --Nautilus Trader
-#nautilus-system = { git = "https://github.com/ztNozdormu/nautilus_trader.git" , branch = "mqtrader" }
-#nautilus-trading = { git = "https://github.com/ztNozdormu/nautilus_trader.git" , branch = "mqtrader" }
-#nautilus-live = { git = "https://github.com/ztNozdormu/nautilus_trader.git" , branch = "mqtrader"}
-#nautilus-common = { git = "https://github.com/ztNozdormu/nautilus_trader.git" , features = ['indicators', "live"] , branch = "mqtrader"}
-#nautilus-model = { git = "https://github.com/ztNozdormu/nautilus_trader.git" , features = ["high-precision"], branch = "mqtrader"}
-#nautilus-core = { git = "https://github.com/ztNozdormu/nautilus_trader.git" , branch = "mqtrader"}
-#nautilus-data = { git = "https://github.com/ztNozdormu/nautilus_trader.git" , branch = "mqtrader"}
-#nautilus-portfolio = { git = "https://github.com/ztNozdormu/nautilus_trader.git" , branch = "mqtrader"}
-#nautilus-okx = { git = "https://github.com/ztNozdormu/nautilus_trader.git" , branch = "mqtrader"}
 
 nautilus-system = { git = "https://github.com/nautechsystems/nautilus_trader.git" , branch = "master" }
 nautilus-trading = { git = "https://github.com/nautechsystems/nautilus_trader.git" , branch = "master" }
