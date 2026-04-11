@@ -22,9 +22,9 @@ nautilus-okx = { git = "https://github.com/nautechsystems/nautilus_trader.git", 
 
 
 # -- Strategy
-dynwrap-strategy = { git = "git@github.com:mountainsea-lab/mq-strategy-L.git" , branch = "main"}
+dynwrap-strategy = { git = "ssh://git@github.com/mountainsea-lab/mq-strategy-L.git" , branch = "main"}
 # -- staticwrap-strategy
-staticwrap-strategy = { git = "git@github.com:mountainsea-lab/mq-strategy-L.git" , branch = "main" }
+staticwrap-strategy = { git = "ssh://git@github.com/mountainsea-lab/mq-strategy-L.git" , branch = "main" }
 
 # -- Serde
 serde = { version = "1", features = ["derive"] }
