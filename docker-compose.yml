@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     environment:
       TRADER_NODE_CONFIG: "/app/config/node_config.json"  # 容器内的路径
-      STRATEGY_CONFIG: "/app/config/libmq_demo_strategy.json"  # 容器内的路径
+      STRATEGY_CONFIG: "/app/config/SOL-USDT-SWAP.OKX.json"  # 容器内的路径
       STRATEGY_LIB: "/app/strategies/libmq_demo_strategy"  # 容器内的路径
     volumes:
       - ./config:/app/config:ro  # 将主机的 config 目录挂载到容器的 /app/config 目录，确保容器可以读取配置文件
